@@ -3,5 +3,5 @@ maratonas
 
 ## Desafios de maratonas e de treinamentos
 
-[SPOJ](http://br.spoj.com/)
-[CodeForces](http://codeforces.com/)
+- [SPOJ](http://br.spoj.com/)
+- [CodeForces](http://codeforces.com/)
