@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Aging Database by mateuscgc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Aging Database</h1>
+      <h2 class="project-tagline">Base to provide researchers robust and high quality samples of face variations due to aging.</h2>
+      <a href="https://github.com/mateuscgc/maratonas" class="btn">View on GitHub</a>
+      <a href="https://github.com/mateuscgc/maratonas/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/mateuscgc/maratonas/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="aging-base" class="anchor" href="#aging-base" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>Aging Base</strong>
+</h1>
+
+<p>The main goal of this database is to provide researchers robust and high quality samples of face variations due to aging, and enable them to use this content in face aging and recognition works.</p>
+
+<p>The base is composed by daily photo experiments published as videos on Youtube. The base itself does not store any of those videos, instead it keeps some information about them (such as url, title, age) and provides the users with tools to easily access and use the experiments.</p>
+
+<p>[Exemplo de video]</p>
+
+<p>The fact that the videos are not stored in the project repository plays an important role to secure that at any time the content owner removes or privates the video on Youtube the same will happen with the access through the base.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>Usage</strong>
+</h2>
+
+<p>The information about the aging samples are stored in the <code>base.json</code> file. Besides the videos information, some tools are provided so that the videos can be processed. In the end you will have organized and processed face pictures through the years and face landmarks information for every picture.</p>
+
+<p>There are basicly three steps in this process. All of them consists among others of scripts in python, so you need to have python installed.</p>
+
+<h4>
+<a id="python" class="anchor" href="#python" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python</h4>
+
+<p>The latest versions of CentOS, Fedora, Redhat Enterprise (RHEL) and Ubuntu come with Python 2.7 out of the box. If it's not your case, you can follow <a href="http://stackoverflow.com/questions/6630873/how-to-download-python-from-command-line">this</a>.</p>
+
+<h2>
+<a id="tasks" class="anchor" href="#tasks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tasks:</h2>
+
+<p>[image explaining]</p>
+
+<ul>
+<li>Download videos</li>
+<li>Extract unique frames</li>
+<li>Filter frames with face and normalize them.</li>
+</ul>
+
+<p>To perform any of those tasks run, from inside the base main folder <code>python main.py &lt;task_name&gt; &lt;filters&gt; &lt;options&gt;</code></p>
+
+<h3>
+<a id="download-task" class="anchor" href="#download-task" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Download task</h3>
+
+<p>This task is to download the videos listed in the base from the Youtube</p>
+
+<p>Usage: <code>python main.py download &lt;filters&gt; &lt;options&gt;</code></p>
+
+<p>requirements: The videos are downloaded using the youtube-dl program.</p>
+
+<h4>
+<a id="youtube-dl" class="anchor" href="#youtube-dl" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>youtube-dl</h4>
+
+<p>Follow <a href="http://rg3.github.io/youtube-dl/download.html">these</a> structions to install youtube.dl. To update it use <code>youtube-dl -U</code></p>
+
+<h3>
+<a id="extract-task" class="anchor" href="#extract-task" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Extract task</h3>
+
+<p>This task extracts distinct frames from videos already downloaded</p>
+
+<p>Usage: <code>python main.py extract &lt;filters&gt; &lt;options&gt;</code></p>
+
+<p>requirements: ffmpeg to extract frames.</p>
+
+<h4>
+<a id="ffmpeg" class="anchor" href="#ffmpeg" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ffmpeg</h4>
+
+<p>Download <a href="https://www.ffmpeg.org/olddownload.html">source</a>, it must be the 1.2.12 "Magic" version. Extract using <code>tar -jxvf ffmpeg-1.2.12.tar.bz2</code> and follow the steps described in the INSTALL file.</p>
+
+<h3>
+<a id="normalize-task" class="anchor" href="#normalize-task" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Normalize task</h3>
+
+<p>It will, f perform normalization to each frame that contain only one face. The normalization consists in detect face landmarks, face rotation to align eyes center and clip the image for an almost face only region. The processed frames are stored in a <code>processed</code> folder inside the experiment specific folder.</p>
+
+<p>In this task the face lankmarks detected for every frame are stored in a json file.</p>
+
+<p>Usage: <code>python main.py normalize &lt;filters&gt; &lt;options&gt;</code></p>
+
+<p>Requiriments: Scons, g++/gcc, OpenCV, Flandmark.</p>
+
+<h4>
+<a id="scons" class="anchor" href="#scons" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SCons</h4>
+
+<p><a href="http://scons.org/pages/download.html">Download</a> and extract scons. inside its directory run <code>python setup.py install</code></p>
+
+<h4>
+<a id="ggcc" class="anchor" href="#ggcc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>g++/gcc</h4>
+
+<p>You should already have these compilers installed, to check that run <code>gcc -v</code> or <code>g++ -v</code>. If it's not, install using:</p>
+
+<pre><code>sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install build-essential
+</code></pre>
+
+<p>To save face landmarks in a json file it's required to have GCC 4.9 or latter. Ubuntu users can follow <a href="http://askubuntu.com/questions/466651/how-do-i-use-the-latest-gcc-on-ubuntu">these</a> instructions to upload GCC.</p>
+
+<h4>
+<a id="opencv" class="anchor" href="#opencv" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>OpenCV</h4>
+
+<p>You can follow <a href="https://gist.github.com/dynamicguy/3d1fce8dae65e765f7c4">this Gist</a> to install OpenCV 2.4.11 in a linux.</p>
+
+<h4>
+<a id="flandmark" class="anchor" href="#flandmark" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>flandmark</h4>
+
+<p>To install flandmark you can download the zip from <a href="https://github.com/uricamic/flandmark">GitHub</a>, extract and follow the steps in the <strong>INSTALL</strong> file.</p>
+
+<h3>
+<a id="filters-and-options" class="anchor" href="#filters-and-options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Filters and Options</h3>
+
+<p>For the three tasks some filters can be used, they are based in the information of the experiments that are stored in the base. All filters are explained below.</p>
+
+<ul>
+<li>Videos</li>
+</ul>
+
+<p>Operates the task over the videos with ids specified</p>
+
+<pre><code>--videos or -v 10 5 15 25
+</code></pre>
+
+<p>Operates the task over the videos with id <code>x</code> to <code>y</code>.</p>
+
+<pre><code>--interval or -i x y
+</code></pre>
+
+<p>Operates the task over the videos with the correspondent url.</p>
+
+<pre><code>--url or -u &lt;video_url&gt;
+</code></pre>
+
+<ul>
+<li>Age</li>
+</ul>
+
+<p>Operates the task over the videos that the estimated age range cross the age range specified by <code>min_age</code> and <code>max_age</code>.</p>
+
+<pre><code>--age-interval or -ai &lt;min_age&gt; &lt;max_age&gt;
+</code></pre>
+
+<ul>
+<li>Gender</li>
+</ul>
+
+<pre><code>--male or -m
+--female or -f
+</code></pre>
+
+<ul>
+<li>Ethnicity</li>
+</ul>
+
+<pre><code>--white or -w
+--black or -b
+--asian or -a
+</code></pre>
+
+<ul>
+<li>Facial Hair</li>
+</ul>
+
+<pre><code>--facial-hair or -fh
+--no-facial-hair or -nfh
+</code></pre>
+
+<p>The <code>--remove or -rm</code> option can be used in the extract and normalize tasks to operate in videos and frames already processed.</p>
+
+<p>For the normalization task, some other options are provided</p>
+
+<ul>
+<li>
+<code>--show</code> Open widows to show the process for each frame, while it's been performed.</li>
+<li>
+<code>--no-rotation</code> Does not perform face rotation.</li>
+<li>
+<code>--draw-landmarks</code> Draw landmarks in the processed frames.</li>
+<li>
+<code>--draw-face-rectangle</code> Draw the face delimiter rectangle in the processed frames.</li>
+</ul>
+
+<h2>
+<a id="statistics" class="anchor" href="#statistics" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>Statistics</strong>
+</h2>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>License</strong>
+</h2>
+
+<h2>
+<a id="collaborative-database" class="anchor" href="#collaborative-database" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>Collaborative database</strong>
+</h2>
+
+<h2>
+<a id="extras" class="anchor" href="#extras" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><strong>Extras</strong>
+</h2>
+
+<ul>
+<li>[ ] Original article</li>
+<li>[ ] Other works</li>
+<li>[ ] Youtube Crawler</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/mateuscgc/maratonas">Aging Database</a> is maintained by <a href="https://github.com/mateuscgc">mateuscgc</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
